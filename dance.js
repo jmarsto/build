@@ -98,20 +98,22 @@ function gamecheck(board) {
 }
 
 document.addEventListener('click', function(e){
-  if(e.target.className=="box"){
-    box = e.target;
-    box.innerText = current_player;
-    box.className = "box-selected";
-    if (current_player == "X") {
-      current_player = "O"
+  if (!over(board)) {
+    if(e.target.className=="box"){
+      box = e.target;
+      box.innerText = current_player;
+      box.className = "box-selected";
+      if (current_player == "X") {
+        current_player = "O"
+      }
+      else {
+        current_player = "X"
+      }
+      status.innerHTML = `Your turn, ${current_player}!`
+      indexOre = box.id
+      index = parseInt(indexOre) -1
     }
-    else {
-      current_player = "X"
-    }
-    status.innerHTML = `Your turn, ${current_player}!`
-    indexOre = box.id
-    index = parseInt(indexOre) -1
+    move(board, index, box.innerText)
+    gamecheck(board)
   }
-  move(board, index, box.innerText)
-  gamecheck(board)
 })
