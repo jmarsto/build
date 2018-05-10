@@ -29,25 +29,20 @@ function position_taken(board, index) {
 }
 
 function won(board) {
-  WIN_COMBINATIONS.forEach(myFunction)
-}
-
-function myFunction(combo, index) {
-    var win_index_1 = combo[0];
-    var win_index_2 = combo[1];
-    var win_index_3 = combo[2];
-    position_1 = board[win_index_1];
-    position_2 = board[win_index_2];
-    position_3 = board[win_index_3];
+  for (i = 0; i < WIN_COMBINATIONS.length; i++) {
+    var win_index_1 = WIN_COMBINATIONS[i][0];
+    var win_index_2 = WIN_COMBINATIONS[i][1];
+    var win_index_3 = WIN_COMBINATIONS[i][2];
+    var position_1 = board[win_index_1];
+    var position_2 = board[win_index_2];
+    var position_3 = board[win_index_3];
     if (position_1 == "X" && position_2 == "X" && position_3 == "X") {
-      return combo
+      return WIN_COMBINATIONS[i]
     }
-    else if (position_1 = "O" && position_2 == "O" && position_3 == "O") {
-      return combo
+    else if (position_1 == "O" && position_2 == "O" && position_3 == "O") {
+      return WIN_COMBINATIONS[i]
     }
-    else {
-      return false
-    }
+  }
 }
 
 function isXorO(token) {
@@ -61,7 +56,7 @@ function full(board) {
 }
 
 function draw(board) {
-  !won(board) && full(board)
+  return !won(board) && full(board)
 }
 
 function over(board) {
@@ -87,25 +82,20 @@ const box7 = document.getElementById(7)
 const box8 = document.getElementById(8)
 const box9 = document.getElementById(9)
 const status = document.getElementById('status')
+const boxes = document.getElementsByClassName('box')
 
-function select1() {
-  if (box1.innerText == `-`) {
-    box1.innerText = current_player
-    box1.className = "box-selected"
-    if (current_player == "X") {
-      current_player = "O"
-    }
-    else {
-      current_player = "X"
-    }
-    status.innerHTML = `Your turn, ${current_player}!`
-    move(board, 0, box1.innerText)
+function gamecheck(board) {
+  if (over(board)) {
+    status.className = "status-final";
+  }
+  if (won(board)) {
+    winner(board)
+    status.innerHTML = `${winnertoken} won!`;
+  }
+  if (draw(board)) {
+    status.innerHTML = "Draw!"
   }
 }
-
-box1.addEventListener('click', select1)
-
-const boxes = document.getElementsByClassName('box')
 
 document.addEventListener('click', function(e){
   if(e.target.className=="box"){
@@ -119,9 +109,9 @@ document.addEventListener('click', function(e){
       current_player = "X"
     }
     status.innerHTML = `Your turn, ${current_player}!`
+    indexOre = box.id
+    index = parseInt(indexOre) -1
   }
-  indexOre = box.id
-  index = parseInt(indexOre) - 1
   move(board, index, box.innerText)
-
+  gamecheck(board)
 })
