@@ -26,11 +26,12 @@ h1 {
 
 .status-final {
   color: MistyRose;
-  font-size: 40px;
+  font-size: 35px;
   font-style: italic;
   font-weight: bold;
   margin-top: 4%;
   margin-left: 9vw;
+  margin-right: 9vw;
   animation: gameOver 5s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;

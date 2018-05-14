@@ -1,5 +1,3 @@
-//working on draw() and won()
-
 const WIN_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -90,7 +88,7 @@ function gamecheck(board) {
   }
   if (won(board)) {
     winner(board)
-    status.innerHTML = `${winnertoken} won!`;
+    status.innerHTML = `${winnertoken} won! Click to play again.`;
   }
   if (draw(board)) {
     status.innerHTML = "Draw!"
@@ -115,5 +113,8 @@ document.addEventListener('click', function(e){
     }
     move(board, index, box.innerText)
     gamecheck(board)
+  }
+  else {
+    location.reload()
   }
 })
